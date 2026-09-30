@@ -2,6 +2,9 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function PartnerMesh() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -10,26 +13,22 @@ export default function PartnerMesh() {
 
   useEffect(() => {
     // 1. Entrance animation for the container
-    gsap.fromTo(
-      containerRef.current,
-      { opacity: 0, y: 30 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 90%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
+    const entranceTrigger = ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: "top 90%",
+      toggleActions: "play none none none",
+      onEnter: () => {
+        gsap.fromTo(
+          containerRef.current,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
+        );
+      },
+    });
 
     // 2. Infinite horizontal ticker loop
     const track = trackRef.current;
     if (track) {
-      // Loop smoothly by translating -50% of the combined track width
       const tween = gsap.to(track, {
         x: "-40%",
         duration: 20,
@@ -40,6 +39,7 @@ export default function PartnerMesh() {
     }
 
     return () => {
+      entranceTrigger.kill();
       if (animationRef.current) animationRef.current.kill();
     };
   }, []);

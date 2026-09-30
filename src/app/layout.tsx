@@ -35,10 +35,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${inter.variable} ${sora.variable} ${jetbrainsMono.variable} h-full antialiased scroll-smooth`}
     >
       <head>
-        {/* Material Symbols Outlined for M3-style icons */}
+        {/* Charset must be the first element inside head */}
+        <meta charSet="utf-8" />
+        {/* Preconnect & Material Symbols Outlined for M3-style icons */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
           rel="stylesheet"
+          crossOrigin="anonymous"
         />
       </head>
       <body className="min-h-full flex flex-col bg-surface font-sans text-on-surface antialiased overflow-x-hidden">

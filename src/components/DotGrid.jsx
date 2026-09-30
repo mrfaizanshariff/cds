@@ -110,9 +110,12 @@ const DotGrid = ({
     if (!circlePath) return;
 
     let rafId;
+    let isVisible = true;
     const proxSq = proximity * proximity;
 
     const draw = () => {
+      if (!isVisible) return;
+
       const canvas = canvasRef.current;
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -148,8 +151,26 @@ const DotGrid = ({
       rafId = requestAnimationFrame(draw);
     };
 
-    draw();
-    return () => cancelAnimationFrame(rafId);
+    let observer = null;
+    if (typeof IntersectionObserver !== 'undefined' && wrapperRef.current) {
+      observer = new IntersectionObserver(([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) {
+          cancelAnimationFrame(rafId);
+          rafId = requestAnimationFrame(draw);
+        } else {
+          cancelAnimationFrame(rafId);
+        }
+      }, { threshold: 0 });
+      observer.observe(wrapperRef.current);
+    } else {
+      rafId = requestAnimationFrame(draw);
+    }
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      if (observer) observer.disconnect();
+    };
   }, [proximity, baseColor, activeRgb, baseRgb, circlePath]);
 
   useEffect(() => {
@@ -190,6 +211,7 @@ const DotGrid = ({
       pr.vy = vy;
       pr.speed = speed;
 
+      if (!canvasRef.current) return;
       const rect = canvasRef.current.getBoundingClientRect();
       pr.x = e.clientX - rect.left;
       pr.y = e.clientY - rect.top;
@@ -218,6 +240,7 @@ const DotGrid = ({
     };
 
     const onClick = e => {
+      if (!canvasRef.current) return;
       const rect = canvasRef.current.getBoundingClientRect();
       const cx = e.clientX - rect.left;
       const cy = e.clientY - rect.top;
@@ -247,7 +270,7 @@ const DotGrid = ({
 
     const throttledMove = throttle(onMove, 50);
     window.addEventListener('mousemove', throttledMove, { passive: true });
-    window.addEventListener('click', onClick);
+    window.addEventListener('click', onClick, { passive: true });
 
     return () => {
       window.removeEventListener('mousemove', throttledMove);

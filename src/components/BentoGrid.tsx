@@ -3,6 +3,9 @@
 import { useEffect, useRef } from "react";
 import NextLink from "next/link";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function BentoGrid() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -29,7 +32,7 @@ export default function BentoGrid() {
       card9Ref.current
     ];
 
-    gsap.fromTo(
+    const tween = gsap.fromTo(
       cards,
       { y: 60, opacity: 0 },
       {
@@ -45,6 +48,11 @@ export default function BentoGrid() {
         },
       }
     );
+
+    return () => {
+      tween.kill();
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+    };
   }, []);
 
   return (

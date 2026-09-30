@@ -289,10 +289,11 @@ export default function Header() {
             {/* Mobile hamburger */}
             <button
               type="button"
+              aria-label="Open navigation menu"
               className="flex xl:hidden p-2 text-primary hover:text-secondary rounded-lg transition-colors"
               onClick={() => setMobileMenuOpen(true)}
             >
-              <Menu className="h-6 w-6" />
+              <Menu className="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
         </header>
@@ -318,10 +319,11 @@ export default function Header() {
             </NextLink>
             <button
               type="button"
+              aria-label="Close navigation menu"
               className="p-2 text-primary hover:text-secondary rounded-lg"
               onClick={() => setMobileMenuOpen(false)}
             >
-              <X className="h-6 w-6" />
+              <X className="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
 

@@ -2,17 +2,18 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function MetricTicker() {
   const containerRef = useRef<HTMLDivElement>(null);
   const num1Ref = useRef<HTMLSpanElement>(null);
   const num2Ref = useRef<HTMLSpanElement>(null);
   const num3Ref = useRef<HTMLSpanElement>(null);
-  const num4Ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    // Premium GSAP Count-Up Animation
-    const statsObj = { num1: 0, num2: 0, num3: 0, num4: 120 }; // Start from higher number for time and count down, count up for others
+    const statsObj = { num1: 0, num2: 0, num3: 0 };
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -58,17 +59,7 @@ export default function MetricTicker() {
       },
     }, 0);
 
-    // 4. Disaster Recovery RTO: < 15 Min
-    // tl.to(statsObj, {
-    //   num4: 15,
-    //   duration: 1.6,
-    //   ease: "power2.out",
-    //   onUpdate: () => {
-    //     if (num4Ref.current) {
-    //       num4Ref.current.innerText = "< " + Math.floor(statsObj.num4) + " Min";
-    //     }
-    //   },
-    // }, 0);
+    return () => { tl.kill(); };
   }, []);
 
   return (
@@ -117,15 +108,12 @@ export default function MetricTicker() {
 
           {/* Metric 4 */}
           <div className="flex flex-col items-center text-center p-3 pt-6 sm:pt-3">
-            <span ref={num4Ref} className="font-headline text-3xl sm:text-4xl font-extrabold text-tertiary tracking-tight">
-            Oracle
+            <span className="font-headline text-3xl sm:text-4xl font-extrabold text-tertiary tracking-tight">
+              Oracle
             </span>
             <span className="font-sans text-xs font-semibold text-primary uppercase tracking-wider mt-1">
-             Certified Partner
+              Certified Partner
             </span>
-            {/* <span className="font-mono text-[11px] text-outline mt-0.5">
-              Zero Data Loss Air-Gapped Snapshots
-            </span> */}
           </div>
 
         </div>

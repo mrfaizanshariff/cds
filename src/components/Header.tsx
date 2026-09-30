@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
@@ -236,92 +237,84 @@ export default function Header() {
   }, []);
 
   return (
-    <div
-      ref={headerRef}
-      className="fixed top-3 lg:top-8 left-0 right-0 z-50 px-4 sm:px-8 max-w-7xl mx-auto pointer-events-none opacity-0"
-    >
-      <header className="pointer-events-auto w-full h-16 sm:h-18 px-4 sm:px-6 rounded-2xl spatial-glass border border-white/80 shadow-[0_8px_30px_rgb(0,0,0,0.06)] flex items-center justify-between transition-all duration-300">
+    <>
+      <div
+        ref={headerRef}
+        className="fixed top-3 lg:top-8 left-0 right-0 z-50 px-4 sm:px-8 max-w-7xl mx-auto pointer-events-none opacity-0"
+      >
+        <header className="pointer-events-auto w-full h-16 sm:h-18 px-4 sm:px-6 rounded-2xl spatial-glass border border-white/80 shadow-[0_8px_30px_rgb(0,0,0,0.06)] flex items-center justify-between transition-all duration-300">
 
-        {/* Logo */}
-        <NextLink className="flex items-center gap-3 group" href="/">
-          <div className="w-9 h-9 rounded-xl bg-primary-container flex items-center justify-center p-1.5 shadow-sm group-hover:scale-105 transition-transform">
-            <svg className="w-full h-full" fill="none" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 30 7 C 17 7 8 16 8 20 C 8 24 17 33 30 33" stroke="#22D3EE" strokeLinecap="round" strokeWidth="3" />
-              <path d="M 28 13 C 21 13 14 17 14 20 C 14 23 21 27 28 27" stroke="#155EEF" strokeLinecap="round" strokeWidth="2.5" />
-              <circle cx="30" cy="7" fill="#22D3EE" r="2.5" />
-              <circle cx="30" cy="33" fill="#155EEF" r="2.5" />
-              <circle cx="19" cy="20" fill="#22D3EE" r="2" />
-            </svg>
-          </div>
-          <div className="flex flex-col">
-            <div className="flex items-baseline gap-1.5">
-              <span className="font-headline font-bold text-lg tracking-tight text-primary">C DATA</span>
-              <span className="font-mono text-[11px] font-semibold tracking-widest text-secondary uppercase">SYSTEMS</span>
-            </div>
-            <span className="text-[9px] font-mono tracking-wider text-outline -mt-1 hidden sm:block">ORACLE SYSTEMS INTEGRATOR</span>
-          </div>
-        </NextLink>
-
-        {/* Desktop nav */}
-        <nav className="hidden xl:flex items-center gap-1 bg-surface-container/60 p-1.5 rounded-xl border border-outline-variant/40">
-          {navigation.map((item) => {
-            const isActive =
-              pathname === item.href ||
-              (item.href !== "/" && pathname.startsWith(item.href));
-            return (
-              <DesktopNavItem key={item.name} item={item} isActive={isActive} />
-            );
-          })}
-        </nav>
-
-        {/* Right CTAs */}
-        <div className="flex items-center gap-3">
-          <NextLink
-            className="hidden md:flex items-center gap-1.5 font-mono text-xs font-medium text-on-surface-variant hover:text-secondary px-3 py-2 rounded-lg transition-colors"
-            href="/contact"
-          >
-            <span className="material-symbols-outlined text-sm">lock</span>
-            <span>Portal</span>
-          </NextLink>
-          <NextLink
-            className="relative group inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full bg-primary text-white font-headline text-xs font-semibold hover:bg-secondary transition-all shadow-md shadow-primary/10 hover:shadow-secondary/25"
-            href="/contact"
-          >
-            <span>Schedule Briefing</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 group-hover:scale-125 transition-transform" />
-            <span className="material-symbols-outlined text-[16px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+          {/* Logo */}
+          <NextLink className="flex items-center group" href="/">
+            <Image
+              src="/C_Data_Logo.png"
+              alt="C DATA SYSTEMS"
+              width={160}
+              height={40}
+              className="h-9 sm:h-10 w-auto object-contain group-hover:scale-105 transition-transform"
+              priority
+            />
           </NextLink>
 
-          {/* Mobile hamburger */}
-          <button
-            type="button"
-            className="flex xl:hidden p-2 text-primary hover:text-secondary rounded-lg transition-colors"
-            onClick={() => setMobileMenuOpen(true)}
-          >
-            <Menu className="h-6 w-6" />
-          </button>
-        </div>
-      </header>
+          {/* Desktop nav */}
+          <nav className="hidden xl:flex items-center gap-1 bg-surface-container/60 p-1.5 rounded-xl border border-outline-variant/40">
+            {navigation.map((item) => {
+              const isActive =
+                pathname === item.href ||
+                (item.href !== "/" && pathname.startsWith(item.href));
+              return (
+                <DesktopNavItem key={item.name} item={item} isActive={isActive} />
+              );
+            })}
+          </nav>
+
+          {/* Right CTAs */}
+          <div className="flex items-center gap-3">
+            <NextLink
+              className="hidden md:flex items-center gap-1.5 font-mono text-xs font-medium text-on-surface-variant hover:text-secondary px-3 py-2 rounded-lg transition-colors"
+              href="/contact"
+            >
+              <span className="material-symbols-outlined text-sm">lock</span>
+              <span>Portal</span>
+            </NextLink>
+            <NextLink
+              className="relative group inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full bg-primary text-white font-headline text-xs font-semibold hover:bg-secondary transition-all shadow-md shadow-primary/10 hover:shadow-secondary/25"
+              href="/contact"
+            >
+              <span>Schedule Briefing</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 group-hover:scale-125 transition-transform" />
+              <span className="material-symbols-outlined text-[16px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+            </NextLink>
+
+            {/* Mobile hamburger */}
+            <button
+              type="button"
+              className="flex xl:hidden p-2 text-primary hover:text-secondary rounded-lg transition-colors"
+              onClick={() => setMobileMenuOpen(true)}
+            >
+              <Menu className="h-6 w-6" />
+            </button>
+          </div>
+        </header>
+      </div>
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-white/98 dark:bg-zinc-950/98 backdrop-blur-md px-6 py-6 pointer-events-auto">
           <div className="flex items-center justify-between">
             <NextLink
-              className="flex items-center gap-3"
+              className="flex items-center"
               href="/"
               onClick={() => setMobileMenuOpen(false)}
             >
-              <div className="w-9 h-9 rounded-xl bg-primary-container flex items-center justify-center p-1.5 shadow-sm">
-                <svg className="w-full h-full" fill="none" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M 30 7 C 17 7 8 16 8 20 C 8 24 17 33 30 33" stroke="#22D3EE" strokeLinecap="round" strokeWidth="3" />
-                  <path d="M 28 13 C 21 13 14 17 14 20 C 14 23 21 27 28 27" stroke="#155EEF" strokeLinecap="round" strokeWidth="2.5" />
-                  <circle cx="30" cy="7" fill="#22D3EE" r="2.5" />
-                  <circle cx="30" cy="33" fill="#155EEF" r="2.5" />
-                  <circle cx="19" cy="20" fill="#22D3EE" r="2" />
-                </svg>
-              </div>
-              <span className="font-headline font-bold text-lg tracking-tight text-primary">C DATA SYSTEMS</span>
+              <Image
+                src="/C_Data_Logo.png"
+                alt="C DATA SYSTEMS"
+                width={150}
+                height={36}
+                className="h-8 w-auto object-contain"
+                priority
+              />
             </NextLink>
             <button
               type="button"
@@ -354,6 +347,6 @@ export default function Header() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }

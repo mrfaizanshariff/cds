@@ -300,7 +300,7 @@ export default function Header() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-white/98 dark:bg-zinc-950/98 backdrop-blur-md px-6 py-6 pointer-events-auto">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-white/98 backdrop-blur-md px-6 py-6 pointer-events-auto">
           <div className="flex items-center justify-between">
             <NextLink
               className="flex items-center"

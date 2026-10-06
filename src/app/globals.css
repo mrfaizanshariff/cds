@@ -1,132 +1,430 @@
 @import "tailwindcss";
 
 @theme {
+  /* ── Typography ── */
   --font-sans: var(--font-inter), sans-serif;
   --font-headline: var(--font-sora), sans-serif;
   --font-mono: var(--font-jetbrains-mono), monospace;
 
-  /* Custom Corporate Material-3 Spatial Colors */
-  --color-surface-tint: #525f74;
-  --color-secondary-fixed: #dbe1ff;
-  --color-tertiary-container: #001f25;
-  --color-on-primary-container: #77849b;
-  --color-on-background: #0b1c30;
-  --color-on-error: #ffffff;
-  --color-secondary-container: #2a69fa;
-  --color-on-surface-variant: #44474c;
-  --color-surface-container-low: #f4f7fc;
-  --color-secondary-fixed-dim: #b4c5ff;
-  --color-on-secondary-container: #fefcff;
-  --color-inverse-primary: #bac7e0;
-  --color-surface-container-high: #e4ecfa;
-  --color-on-primary-fixed: #0e1c2e;
-  --color-on-tertiary-container: #0091a5;
-  --color-background: #f8fafd;
-  --color-on-primary-fixed-variant: #3b475c;
-  --color-on-tertiary-fixed: #001f25;
-  --color-primary-fixed-dim: #bac7e0;
-  --color-on-secondary: #ffffff;
-  --color-inverse-on-surface: #eaf1ff;
-  --color-tertiary-fixed-dim: #06b6d4;
-  --color-error: #ba1a1a;
-  --color-surface-variant: #d3e4fe;
-  --color-surface: #f8fafd;
-  --color-primary-container: #0a1322;
-  --color-surface-bright: #ffffff;
-  --color-on-tertiary-fixed-variant: #004e5a;
-  --color-outline-variant: #dbe3f0;
-  --color-on-error-container: #93000a;
-  --color-error-container: #ffdad6;
-  --color-on-primary: #ffffff;
-  --color-secondary: #0050d7;
-  --color-inverse-surface: #213145;
-  --color-primary: #071527;
-  --color-on-secondary-fixed: #00174b;
-  --color-surface-container-highest: #d3e4fe;
-  --color-on-surface: #0b1c30;
-  --color-primary-fixed: #d6e3fc;
-  --color-surface-dim: #cbdbf5;
-  --color-on-tertiary: #ffffff;
-  --color-on-secondary-fixed-variant: #003da9;
-  --color-tertiary: #0891b2;
-  --color-surface-container-lowest: #ffffff;
-  --color-surface-container: #edf2fb;
-  --color-outline: #75777d;
-  --color-tertiary-fixed: #a2eeff;
+  /* ──────────────────────────────────────────────────────────────
+     CDNA 2.0 — Neo-Cyber Dynamic Design Tokens
+     A cohesive, opinionated system: deep-space navy field with
+     electric-cyan / indigo / fuchsia accents and glass-morphism
+     surface layers.
+  ────────────────────────────────────────────────────────────── */
+
+  /* ── Core palette ── */
+  --cdna-navy:   #040810;
+  --cdna-deep:   #0a1120;
+  --cdna-slate:  #1e2e4a;
+  --cdna-panel:  #ffffff;
+  --cdna-panel-2:#f5f7fb;
+  --cdna-border: #d3e0f0;
+  --cdna-border-2:#b8c7de;
+
+  /* ── Accent gradients ── */
+  --cdna-cyan:   #00d4ff;
+  --cdna-indigo: #3b82f6;
+  --cdna-fuchsia:#a855f7;
+  --cdna-emerald:#10b981;
+  --cdna-amber:  #f59e0b;
+  --cdna-white:  #ffffff;
+
+  /* ── Text hierarchy ── */
+  --cdna-text-primary:   #0a1120;
+  --cdna-text-secondary: #24344d;
+  --cdna-text-tertiary:  #526382;
+  --cdna-text-muted:     #7b8fa8;
 }
 
 :root {
-  --background: #f8fafd;
-  --foreground: #0b1c30;
+  --background: var(--cdna-panel);
+  --foreground: var(--cdna-text-primary);
 }
 
+/* ── Body reset & base ── */
 body {
   background-color: var(--background);
   color: var(--foreground);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Spatial Cyber Grid Background Pattern */
+/* ── Selection highlight ── */
+.selection\:bg-secondary\/15 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(59 130 246 / 0.15);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ANIMATED BACKGROUND GRADIENT  (hero + dark sections)
+   Slow, cinematic radial sweep
+════════════════════════════════════════════════════════════════ */
+.bg-animated-gradient {
+  background: radial-gradient(
+    circle at 10% 20%,
+    color-mix(in srgb, var(--cdna-cyan) 22%, transparent 78%),
+    transparent 22%
+  ),
+  radial-gradient(
+    circle at 90% 80%,
+    color-mix(in srgb, var(--cdna-indigo) 20%, transparent 80%),
+    transparent 22%
+  ),
+  radial-gradient(
+    circle at 50% 50%,
+    color-mix(in srgb, var(--cdna-fuchsia) 8%, transparent 92%),
+    transparent 30%
+  );
+  background-size: 200% 200%;
+  animation: gradientSweep 28s ease-in-out infinite;
+}
+
+@keyframes gradientSweep {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   GLASS MORPHISM BASE
+════════════════════════════════════════════════════════════════ */
+.glass {
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(211, 222, 240, 0.5);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+}
+
+.glass-dark {
+  background: rgba(10, 17, 32, 0.62);
+  border: 1px solid rgba(79, 112, 191, 0.35);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+}
+
+/* ── Glass hover lift ── */
+.glass-hover {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-hover:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 20px 50px -12px rgba(0, 13, 34, 0.12),
+    0 4px 16px 0 rgba(0, 13, 34, 0.06);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   PARALLAX HELPERS
+   These classes pair with the CSS-only `parallax-slow` /
+   `parallax-fast` utility that reads scroll via a lightweight
+   transform in the ScrollParallax component.
+════════════════════════════════════════════════════════════════ */
+.parallax-slow {
+  will-change: transform;
+}
+
+.parallax-fast {
+  will-change: transform;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   FLOATING / PULSE ANIMATIONS
+════════════════════════════════════════════════════════════════ */
+.animate-float-slow {
+  animation: floatSlow 8s ease-in-out infinite;
+}
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0) rotate(0.5deg); }
+  50%      { transform: translateY(-10px) rotate(-0.5deg); }
+}
+
+.animate-float-med {
+  animation: floatMed 6s ease-in-out infinite;
+}
+@keyframes floatMed {
+  0%, 100% { transform: translateY(0) rotate(0.3deg); }
+  50%      { transform: translateY(-8px) rotate(-0.3deg); }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.35; }
+  50%      { opacity: 0.7;  }
+}
+
+/* Spin variations for orbital elements */
+.animate-spin-slow {
+  animation: spinSlow 40s linear infinite;
+}
+@keyframes spinSlow {
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-reverse {
+  animation: spinReverse 26s linear infinite;
+}
+@keyframes spinReverse {
+  to { transform: rotate(-360deg); }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   DYNAMIC BACKGROUNDS & PATTERNS
+════════════════════════════════════════════════════════════════ */
 .cyber-dot-grid {
-  background-image: radial-gradient(rgba(14, 28, 46, 0.12) 1.25px, transparent 1.25px);
-  background-size: 28px 28px;
+  background-image:
+    radial-gradient(rgba(14, 28, 46, 0.08) 1.25px, transparent 1.25px),
+    radial-gradient(rgba(59, 130, 246, 0.06) 1px, transparent 1px);
+  background-size: 28px 28px, 20px 20px;
 }
+
 .cyber-dot-grid-subtle {
-  background-image: radial-gradient(rgba(0, 80, 215, 0.08) 1px, transparent 1px);
-  background-size: 20px 20px;
+  background-image:
+    radial-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-/* Neomorphic / Crisp spatial shadows */
-.spatial-card {
-  background: #ffffff;
-  border: 1px solid rgba(219, 227, 240, 0.8);
-  box-shadow: 0 10px 30px -10px rgba(11, 28, 48, 0.05), 0 1px 3px 0 rgba(11, 28, 48, 0.03);
-}
-.spatial-card-hover {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.spatial-card-hover:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 20px 38px -12px rgba(0, 80, 215, 0.12), 0 4px 10px 0 rgba(11, 28, 48, 0.04);
-  border-color: rgba(42, 105, 250, 0.35);
-}
-.spatial-glass {
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.95);
-  box-shadow: 0 12px 35px -8px rgba(11, 28, 48, 0.06);
-}
-.dot-grid {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
+/* ── Radial noise texture overlay (subtle film grain) ── */
+.noise-overlay {
   position: relative;
 }
-
-.dot-grid__wrap {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-.dot-grid__canvas {
+.noise-overlay::before {
+  content: "";
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 276 276' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter filterId='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cg filter='url(%23n)' opacity='0.04'%3E%3Crect width='100%25' height='100%25'/%3E%3C/g%3E%3C/svg%3E");
   pointer-events: none;
+  mix-blend-mode: overlay;
+  opacity: 0.35;
 }
-.shapegrid-canvas {
+
+/* ── Gradient stroke for cards ── */
+.gradient-stroke {
+  border: 1px solid transparent;
+  border-image: linear-gradient(135deg,
+    color-mix(in srgb, var(--cdna-cyan) 40%, transparent),
+    color-mix(in srgb, var(--cdna-fuchsia) 35%, transparent),
+    color-mix(in srgb, var(--cdna-indigo) 40%, transparent)) 1;
+}
+
+.gradient-stroke-2 {
+  border: 1px solid transparent;
+  border-image: linear-gradient(135deg,
+    color-mix(in srgb, var(--cdna-indigo) 40%, transparent),
+    color-mix(in srgb, var(--cdna-emerald) 35%, transparent),
+    color-mix(in srgb, var(--cdna-cyan) 40%, transparent)) 1;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   COMPONENT-LEVEL UTILITIES (kept as CSS classes for convenience)
+════════════════════════════════════════════════════════════════ */
+
+/* Spatial card — base white surface with subtle depth */
+.spatial-card {
+  background: #ffffff;
+  border: 1px solid rgba(211, 222, 240, 0.6);
+  box-shadow: 0 10px 30px -10px rgba(10, 17, 32, 0.04), 0 1px 3px 0 rgba(10, 17, 32, 0.03);
+}
+
+/* Legacy aliases (kept for backward-compat with JSX class references) */
+.spatial-glass {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 12px 35px -8px rgba(10, 17, 32, 0.05);
+}
+
+/* Dot-grid container wrappers (used by canvas-based backgrounds) */
+.dot-grid-container {
+  position: relative;
   width: 100%;
   height: 100%;
-  border: none;
-  display: block;
 }
-/* ---- DotField.css ---- */
+
+.threads-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 .dot-field-container {
   position: relative;
   width: 100%;
   height: 100%;
+}
+
+/* ── Smooth scroll for anchor links ── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── Reduced motion respect ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ENHANCED GLASS VARIANTS
+════════════════════════════════════════════════════════════════ */
+.glass-card {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(211, 224, 245, 0.6);
+  backdrop-filter: blur(20px) saturate(200%);
+  -webkit-backdrop-filter: blur(20px) saturate(200%);
+  box-shadow:
+    0 4px 24px -4px rgba(10, 17, 32, 0.06),
+    0 1px 4px 0 rgba(10, 17, 32, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.glass-card-hover {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 24px 64px -12px rgba(10, 17, 32, 0.14),
+    0 6px 20px -4px rgba(59, 130, 246, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border-color: rgba(59, 130, 246, 0.25);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(211, 224, 245, 0.7);
+  backdrop-filter: blur(24px) saturate(220%);
+  -webkit-backdrop-filter: blur(24px) saturate(220%);
+  box-shadow:
+    0 8px 32px -8px rgba(10, 17, 32, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+/* ── Hero section glass (lighter for hero backgrounds) */
+.glass-hero {
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  box-shadow: 0 8px 32px -8px rgba(10, 17, 32, 0.07);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   GRADIENT MESH BACKGROUNDS
+════════════════════════════════════════════════════════════════ */
+.gradient-mesh-1 {
+  background:
+    radial-gradient(ellipse 60% 40% at 10% 20%, rgba(0, 212, 255, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 35% at 90% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 50% at 50% 50%, rgba(168, 85, 247, 0.07) 0%, transparent 70%),
+    #ffffff;
+}
+
+.gradient-mesh-2 {
+  background:
+    radial-gradient(ellipse 55% 45% at 80% 15%, rgba(0, 212, 255, 0.14) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 40% at 15% 85%, rgba(16, 185, 129, 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 30% at 50% 50%, rgba(59, 130, 246, 0.06) 0%, transparent 70%),
+    #f5f7fb;
+}
+
+.gradient-mesh-dark {
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 30%, rgba(0, 212, 255, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 70%, rgba(59, 130, 246, 0.10) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 35% at 50% 50%, rgba(168, 85, 247, 0.06) 0%, transparent 65%),
+    #040810;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SCROLL-LINKED REVEAL HELPERS
+════════════════════════════════════════════════════════════════ */
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(32px);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   GLOWING ACCENTS
+════════════════════════════════════════════════════════════════ */
+.glow-cyan {
+  box-shadow: 0 0 30px -4px rgba(0, 212, 255, 0.35), 0 0 60px -8px rgba(0, 212, 255, 0.15);
+}
+.glow-indigo {
+  box-shadow: 0 0 30px -4px rgba(59, 130, 246, 0.35), 0 0 60px -8px rgba(59, 130, 246, 0.15);
+}
+.glow-fuchsia {
+  box-shadow: 0 0 30px -4px rgba(168, 85, 247, 0.30), 0 0 60px -8px rgba(168, 85, 247, 0.12);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ANIMATED BORDER GRADIENT
+════════════════════════════════════════════════════════════════ */
+@keyframes borderRotate {
+  to { background-position: 200% center; }
+}
+
+.border-gradient-animated {
+  position: relative;
+  background: linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(135deg, var(--cdna-cyan), var(--cdna-indigo), var(--cdna-fuchsia), var(--cdna-cyan)) border-box;
+  background-size: 200% auto;
+  border: 1px solid transparent;
+  animation: borderRotate 4s linear infinite;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SHIMMER / SKELETON LOADING EFFECT
+════════════════════════════════════════════════════════════════ */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.55) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2.4s infinite;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   METRIC COUNTER GLOW ANIM
+════════════════════════════════════════════════════════════════ */
+@keyframes counterPulse {
+  0%, 100% { text-shadow: 0 0 0px transparent; }
+  50%       { text-shadow: 0 0 20px rgba(59, 130, 246, 0.35); }
+}
+.animate-counter-glow {
+  animation: counterPulse 2.5s ease-in-out infinite;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   PARALLAX ORB ANIMATIONS (page sections)
+════════════════════════════════════════════════════════════════ */
+.orb-1 {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   CARD GRID STAGGER BASE (set opacity via JS after entrance)
+════════════════════════════════════════════════════════════════ */
+[data-reveal] {
+  opacity: 0;
 }

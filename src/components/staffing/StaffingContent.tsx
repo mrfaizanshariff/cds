@@ -9,31 +9,22 @@ gsap.registerPlugin(ScrollTrigger);
 
 const engagementModels = [
   {
-    num: "01",
-    tag: "TEAM AUGMENTATION",
-    icon: "groups",
-    iconBg: "bg-blue-50",
-    iconColor: "text-secondary",
+    num: "01", tag: "TEAM AUGMENTATION",
+    icon: "groups", gradient: "from-blue-400 to-indigo-500", glow: "rgba(59,130,246,0.2)",
     title: "Project-Based Cohorts",
     highlight: "Saves 3+ months of hiring time",
     desc: "Complete cross-functional squads — Architects, Engineers, QA specialists — managed by us and integrated into your agile cycles within 5 business days.",
   },
   {
-    num: "02",
-    tag: "FLEXIBLE 1099",
-    icon: "manage_accounts",
-    iconBg: "bg-cyan-50",
-    iconColor: "text-cyan-700",
+    num: "02", tag: "FLEXIBLE 1099",
+    icon: "manage_accounts", gradient: "from-cyan-400 to-sky-500", glow: "rgba(6,182,212,0.2)",
     title: "Senior IT Contractors",
     highlight: "Niche specialists on demand",
     desc: "Elite software talent on flexible hourly contracts to cover critical project gaps — Kubernetes specialists, Oracle DBAs, SOC2 consultants, and more.",
   },
   {
-    num: "03",
-    tag: "EXECUTIVE SEARCH",
-    icon: "verified_user",
-    iconBg: "bg-emerald-50",
-    iconColor: "text-emerald-700",
+    num: "03", tag: "EXECUTIVE SEARCH",
+    icon: "verified_user", gradient: "from-emerald-400 to-teal-500", glow: "rgba(16,185,129,0.2)",
     title: "Direct Hire & Exec Search",
     highlight: "90-day retention warranty",
     desc: "Full-time CTOs, VPs, and Principal Engineers sourced and screened against your tech stack, culture, and long-term growth requirements.",
@@ -41,63 +32,43 @@ const engagementModels = [
 ];
 
 const skillMatrix = [
-  { category: "IT Staffing",               items: ["Oracle DBA", "Cloud Architects", "DevOps Engineers", "Cybersecurity Analysts", "Systems Integrators"] },
-  { category: "Engineering",               items: ["Software Engineers", "Full-Stack Developers", "Platform Engineers", "QA Automation", "Data Engineers"] },
-  { category: "Accounting & Finance",      items: ["Financial Analysts", "ERP Specialists", "Accounts Payable/Receivable", "Controllers", "Administrative Support"] },
-  { category: "Scientific & Clinical",     items: ["Data Scientists", "Clinical Analysts", "Research Engineers", "Biotech Specialists", "Lab Operations"] },
-  { category: "Light Industrial",          items: ["Operations Coordinators", "Logistics Support", "Production Technicians", "Warehouse Management", "Field Technicians"] },
+  { category: "IT Staffing",           gradient: "from-blue-400 to-indigo-500",   items: ["Oracle DBA", "Cloud Architects", "DevOps Engineers", "Cybersecurity Analysts", "Systems Integrators"] },
+  { category: "Engineering",           gradient: "from-cyan-400 to-sky-500",      items: ["Software Engineers", "Full-Stack Developers", "Platform Engineers", "QA Automation", "Data Engineers"] },
+  { category: "Accounting & Finance",  gradient: "from-emerald-400 to-teal-500",  items: ["Financial Analysts", "ERP Specialists", "Accounts Payable/Receivable", "Controllers", "Administrative Support"] },
+  { category: "Scientific & Clinical", gradient: "from-violet-400 to-purple-500", items: ["Data Scientists", "Clinical Analysts", "Research Engineers", "Biotech Specialists", "Lab Operations"] },
+  { category: "Light Industrial",      gradient: "from-amber-400 to-orange-500",  items: ["Operations Coordinators", "Logistics Support", "Production Technicians", "Warehouse Management", "Field Technicians"] },
 ];
 
 const vettingSteps = [
-  {
-    stage: "STEP 01",
-    title: "Code Hygiene Audit",
-    desc: "Automated tests assessing code cleanliness, performance complexity, and boundary handling.",
-    highlight: false,
-  },
-  {
-    stage: "STEP 02",
-    title: "Live Architecture Defense",
-    desc: "Candidates design a distributed system under live interrogation from our senior engineers.",
-    highlight: false,
-  },
-  {
-    stage: "STEP 03",
-    title: "Communication & Candor",
-    desc: "Evaluation of project ownership, English proficiency, and collaborative mindset.",
-    highlight: true,
-  },
+  { stage: "STEP 01", title: "Code Hygiene Audit",        desc: "Automated tests assessing code cleanliness, performance complexity, and boundary handling.", highlight: false },
+  { stage: "STEP 02", title: "Live Architecture Defense",  desc: "Candidates design a distributed system under live interrogation from our senior engineers.",  highlight: false },
+  { stage: "STEP 03", title: "Communication & Candor",    desc: "Evaluation of project ownership, English proficiency, and collaborative mindset.",             highlight: true  },
 ];
 
 export default function StaffingContent() {
-  const engHeadRef  = useRef<HTMLDivElement>(null);
-  const engGridRef  = useRef<HTMLDivElement>(null);
-  const vettingRef  = useRef<HTMLDivElement>(null);
-  const matrixRef   = useRef<HTMLDivElement>(null);
+  const engHeadRef = useRef<HTMLDivElement>(null);
+  const engGridRef = useRef<HTMLDivElement>(null);
+  const vettingRef = useRef<HTMLDivElement>(null);
+  const matrixRef  = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const sections = [
-      { heading: engHeadRef.current, grid: engGridRef.current },
-    ];
-    sections.forEach(({ heading, grid }) => {
-      if (heading) {
-        gsap.fromTo(heading, { y: 24, opacity: 0 }, {
-          y: 0, opacity: 1, duration: 0.8, ease: "power3.out",
-          scrollTrigger: { trigger: heading, start: "top 88%", toggleActions: "play none none none" },
+    if (engHeadRef.current) {
+      gsap.fromTo(engHeadRef.current, { y: 24, opacity: 0 }, {
+        y: 0, opacity: 1, duration: 0.8, ease: "power3.out",
+        scrollTrigger: { trigger: engHeadRef.current, start: "top 88%", toggleActions: "play none none none" },
+      });
+    }
+    if (engGridRef.current) {
+      const cards = Array.from(engGridRef.current.querySelectorAll<HTMLElement>("[data-card]"));
+      if (cards.length) {
+        gsap.fromTo(cards, { y: 40, opacity: 0, scale: 0.97 }, {
+          y: 0, opacity: 1, scale: 1, duration: 0.7, stagger: 0.1, ease: "power3.out",
+          scrollTrigger: { trigger: engGridRef.current, start: "top 85%", toggleActions: "play none none none" },
         });
       }
-      if (grid) {
-        const cards = Array.from(grid.querySelectorAll<HTMLElement>("[data-card]"));
-        if (cards.length) {
-          gsap.fromTo(cards, { y: 28, opacity: 0 }, {
-            y: 0, opacity: 1, duration: 0.55, stagger: 0.08, ease: "power3.out",
-            scrollTrigger: { trigger: grid, start: "top 85%", toggleActions: "play none none none" },
-          });
-        }
-      }
-    });
+    }
     if (vettingRef.current) {
-      gsap.fromTo(vettingRef.current, { y: 32, opacity: 0 }, {
+      gsap.fromTo(vettingRef.current, { y: 36, opacity: 0 }, {
         y: 0, opacity: 1, duration: 0.9, ease: "power3.out",
         scrollTrigger: { trigger: vettingRef.current, start: "top 88%", toggleActions: "play none none none" },
       });
@@ -115,22 +86,17 @@ export default function StaffingContent() {
 
   return (
     <>
-      {/* ── Section 1: Engagement Models ───────────────────────────────────── */}
-      <section
-        id="staffing-solutions"
-        className="w-full py-20 bg-white border-y border-outline-variant/50 cyber-dot-grid-subtle"
-      >
+      {/* Engagement Models */}
+      <section id="staffing-solutions" className="w-full py-20 gradient-mesh-1 border-y border-outline-variant/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div ref={engHeadRef} className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4" style={{ opacity: 0 }}>
             <div>
-              <div className="inline-flex items-center gap-2 text-xs font-mono tracking-wider text-secondary uppercase font-semibold">
-                <span className="w-2.5 h-2.5 rounded-sm bg-secondary" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass border border-outline-variant/40 text-xs font-mono text-secondary font-semibold mb-3">
+                <span className="w-2 h-2 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500" />
                 FLEXIBLE ENGAGEMENT MODELS
               </div>
-              <h2 className="font-headline text-3xl sm:text-4xl font-bold text-primary mt-2 tracking-tight">
-                Staffing Solutions
-              </h2>
-              <p className="font-sans text-base text-on-surface-variant mt-2 max-w-2xl">
+              <h2 className="font-headline text-3xl sm:text-4xl font-bold text-primary tracking-tight">Staffing Solutions</h2>
+              <p className="font-sans text-base text-secondary mt-2 max-w-2xl">
                 Three engagement pathways designed to match your project scope, timeline, and budget.
               </p>
             </div>
@@ -142,22 +108,32 @@ export default function StaffingContent() {
               <div
                 data-card
                 key={m.num}
-                className="spatial-card spatial-card-hover rounded-2xl border border-outline-variant/60 flex flex-col overflow-hidden"
+                className="group glass-card glass-card-hover rounded-2xl flex flex-col overflow-hidden relative"
                 style={{ opacity: 0 }}
               >
-                {/* Top band */}
-                <div className="bg-surface-container-low border-b border-outline-variant/40 px-5 py-4 flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-secondary uppercase">{m.highlight}</span>
-                  <div className={`w-9 h-9 rounded-xl ${m.iconBg} ${m.iconColor} flex items-center justify-center`}>
-                    <span className="material-symbols-outlined text-lg">{m.icon}</span>
+                {/* Top accent */}
+                <div className={`absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r ${m.gradient}`} />
+
+                {/* Header band */}
+                <div className="relative overflow-hidden">
+                  <div className={`absolute inset-0 bg-gradient-to-br ${m.gradient} opacity-[0.07]`} />
+                  <div className="relative px-5 py-4 flex items-center justify-between">
+                    <span className={`font-mono text-xs font-bold bg-gradient-to-r ${m.gradient} bg-clip-text text-transparent uppercase`}>
+                      {m.highlight}
+                    </span>
+                    <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${m.gradient} flex items-center justify-center shadow-lg`}
+                      style={{ boxShadow: `0 4px 14px -2px ${m.glow}` }}>
+                      <span className="material-symbols-outlined text-white text-[18px]">{m.icon}</span>
+                    </div>
                   </div>
                 </div>
+
                 <div className="p-5 flex flex-col flex-1">
                   <h3 className="font-headline font-semibold text-base text-primary mb-2">{m.title}</h3>
-                  <p className="font-sans text-xs text-on-surface-variant leading-relaxed flex-1">{m.desc}</p>
+                  <p className="font-sans text-xs text-secondary leading-relaxed flex-1">{m.desc}</p>
                   <div className="mt-4 pt-3 border-t border-outline-variant/40 flex items-center justify-between text-[11px] font-mono">
                     <span className="text-outline">{m.tag}</span>
-                    <span className="text-secondary font-semibold">{m.num}</span>
+                    <span className={`bg-gradient-to-r ${m.gradient} bg-clip-text text-transparent font-bold`}>{m.num}</span>
                   </div>
                 </div>
               </div>
@@ -166,94 +142,82 @@ export default function StaffingContent() {
         </div>
       </section>
 
-      {/* ── Section 2: Vetting Process ──────────────────────────────────────── */}
-      <section
-        id="our-edge"
-        className="w-full py-20 bg-surface cyber-dot-grid"
-      >
+      {/* Vetting Process */}
+      <section id="our-edge" className="w-full py-20 gradient-mesh-2">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div ref={vettingRef} className="spatial-card rounded-3xl p-6 sm:p-10 border border-outline-variant/60 bg-white" style={{ opacity: 0 }}>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-              {/* Left: heading */}
-              <div className="lg:col-span-4">
-                <span className="font-mono text-xs font-semibold text-secondary uppercase tracking-widest">
-                  QUALITY ASSURANCE
-                </span>
-                <h3 className="font-headline text-2xl font-bold text-primary mt-2">
-                  Our Elite Vetting Process
-                </h3>
-                <p className="font-sans text-sm text-on-surface-variant mt-3 leading-relaxed">
-                  We maintain an active bench of pre-audited senior engineers. When you request talent,
-                  we select from our verified delivery pool — no job postings, no cold sourcing.
-                </p>
-                <Link
-                  href="/contact"
-                  className="mt-6 inline-flex items-center gap-2 text-xs font-mono font-semibold text-secondary hover:text-primary transition-colors"
-                >
-                  <span>REQUEST TALENT BRIEF</span>
-                  <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
-                </Link>
-              </div>
+          <div ref={vettingRef} className="glass-strong rounded-3xl border border-outline-variant/50 shadow-xl overflow-hidden" style={{ opacity: 0 }}>
+            {/* Header bar */}
+            <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-8 py-5">
+              <span className="font-mono text-xs font-bold text-white/70 uppercase tracking-wider">QUALITY ASSURANCE</span>
+              <h3 className="font-headline text-xl font-bold text-white mt-1">Our Elite Vetting Process</h3>
+            </div>
 
-              {/* Right: steps */}
-              <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {vettingSteps.map((s) => (
-                  <div
-                    key={s.stage}
-                    className={`p-5 rounded-xl border flex flex-col ${
-                      s.highlight
-                        ? "bg-blue-50 border-blue-200"
-                        : "bg-surface-container-low border-outline-variant/40"
-                    }`}
-                  >
-                    <span className="font-mono text-xs font-bold text-secondary">{s.stage}</span>
-                    <h4 className="font-headline font-semibold text-sm text-primary mt-2">{s.title}</h4>
-                    <p className="font-sans text-[11px] text-on-surface-variant mt-1.5 leading-relaxed flex-1">{s.desc}</p>
-                  </div>
-                ))}
+            <div className="p-6 sm:p-10">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+                <div className="lg:col-span-4">
+                  <p className="font-sans text-sm text-secondary leading-relaxed">
+                    We maintain an active bench of pre-audited senior engineers. When you request talent, we select from our verified delivery pool — no job postings, no cold sourcing.
+                  </p>
+                  <Link href="/contact" className="group mt-6 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-600 text-white font-headline text-xs font-semibold hover:scale-105 transition-all shadow-md">
+                    <span>Request Talent Brief</span>
+                    <span className="material-symbols-outlined text-[14px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+                  </Link>
+                </div>
+
+                <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {vettingSteps.map((s, i) => (
+                    <div
+                      key={s.stage}
+                      className={`p-5 rounded-2xl flex flex-col relative overflow-hidden ${s.highlight ? "glass-card" : "bg-white/50 border border-outline-variant/50"}`}
+                    >
+                      {s.highlight && <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-400 via-indigo-500 to-violet-500" />}
+                      <span className="font-mono text-xs font-bold text-secondary">{s.stage}</span>
+                      <h4 className="font-headline font-semibold text-sm text-primary mt-2">{s.title}</h4>
+                      <p className="font-sans text-[11px] text-secondary mt-1.5 leading-relaxed flex-1">{s.desc}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── Section 3: Skill Matrix ─────────────────────────────────────────── */}
-      <section
-        id="it-staffing"
-        className="w-full py-20 bg-white border-t border-outline-variant/50 cyber-dot-grid-subtle"
-      >
+      {/* Skill Matrix */}
+      <section id="it-staffing" className="w-full py-20 gradient-mesh-1 border-t border-outline-variant/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-10">
-            <div className="inline-flex items-center gap-2 text-xs font-mono tracking-wider text-secondary uppercase font-semibold">
-              <span className="w-2.5 h-2.5 rounded-sm bg-secondary" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass border border-outline-variant/40 text-xs font-mono text-secondary font-semibold mb-3">
+              <span className="w-2 h-2 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500" />
               STAFFING SKILL MATRIX
             </div>
-            <h2 className="font-headline text-3xl sm:text-4xl font-bold text-primary mt-2 tracking-tight">
-              Disciplines We Staff
-            </h2>
-            <p className="font-sans text-base text-on-surface-variant mt-2 max-w-2xl">
+            <h2 className="font-headline text-3xl sm:text-4xl font-bold text-primary tracking-tight">Disciplines We Staff</h2>
+            <p className="font-sans text-base text-secondary mt-2 max-w-2xl">
               From Oracle DBAs to clinical researchers — our talent network spans five workforce categories.
             </p>
           </div>
 
-          <div ref={matrixRef} className="divide-y divide-outline-variant/40 border border-outline-variant/50 rounded-2xl overflow-hidden">
-            {skillMatrix.map((row) => (
+          <div ref={matrixRef} className="divide-y divide-outline-variant/40 glass-strong rounded-2xl overflow-hidden border border-outline-variant/50">
+            {skillMatrix.map((row, i) => (
               <div
                 data-row
                 key={row.category}
-                className="grid grid-cols-1 sm:grid-cols-12 items-center gap-4 px-5 py-4 bg-white hover:bg-surface-container-low transition-colors"
+                className="grid grid-cols-1 sm:grid-cols-12 items-center gap-4 px-5 py-4 hover:bg-white/60 transition-colors"
                 style={{ opacity: 0 }}
               >
                 <div className="sm:col-span-3">
-                  <span className="font-mono text-xs font-bold text-secondary uppercase tracking-wider">
-                    {row.category}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <div className={`w-2 h-2 rounded-full bg-gradient-to-br ${row.gradient}`} />
+                    <span className={`font-mono text-xs font-bold bg-gradient-to-r ${row.gradient} bg-clip-text text-transparent uppercase tracking-wider`}>
+                      {row.category}
+                    </span>
+                  </div>
                 </div>
                 <div className="sm:col-span-9 flex flex-wrap gap-2">
                   {row.items.map((item) => (
                     <span
                       key={item}
-                      className="px-2.5 py-1 rounded-lg bg-surface-container font-sans text-xs text-on-surface-variant border border-outline-variant/40"
+                      className="px-2.5 py-1 rounded-lg glass border border-outline-variant/40 font-sans text-xs text-secondary"
                     >
                       {item}
                     </span>

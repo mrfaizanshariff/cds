@@ -29,8 +29,6 @@ export default function DetailCTA({
   ctaSecondaryLabel,
   ctaSecondaryHref,
   ctaWatermarkIcon = "architecture",
-  accentBg = "bg-secondary",
-  accentText = "text-secondary",
 }: Props) {
   const bannerRef = useRef<HTMLDivElement>(null);
 
@@ -44,55 +42,48 @@ export default function DetailCTA({
   }, []);
 
   return (
-    <section
-      id="detail-cta"
-      className="w-full py-20 bg-surface cyber-dot-grid-subtle"
-    >
+    <section id="detail-cta" className="w-full py-20 gradient-mesh-2">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           ref={bannerRef}
-          className="rounded-3xl bg-primary text-white p-8 md:p-12 relative overflow-hidden"
+          className="relative rounded-3xl overflow-hidden"
           style={{ opacity: 0 }}
         >
-          {/* Decorative watermark icon */}
-          <div className="absolute top-0 right-0 -translate-y-6 translate-x-6 opacity-[0.05] pointer-events-none select-none">
-            <span className="material-symbols-outlined" style={{ fontSize: "18rem", lineHeight: 1 }}>
-              {ctaWatermarkIcon}
-            </span>
+          {/* Gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-secondary via-indigo-600 to-cyan-600" />
+          <div className="absolute inset-0 opacity-[0.07] cyber-dot-grid-subtle" />
+
+          {/* Decorative blobs */}
+          <div className="absolute -top-16 -right-16 w-72 h-72 rounded-full bg-white/5 blur-2xl pointer-events-none" />
+          <div className="absolute -bottom-12 -left-12 w-56 h-56 rounded-full bg-cyan-400/10 blur-2xl pointer-events-none" />
+
+          {/* Watermark */}
+          <div className="absolute top-0 right-0 -translate-y-6 translate-x-6 opacity-[0.06] pointer-events-none select-none">
+            <span className="material-symbols-outlined" style={{ fontSize: "18rem", lineHeight: 1 }}>{ctaWatermarkIcon}</span>
           </div>
 
-          {/* Decorative ring */}
-          <div className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full border border-white/5 pointer-events-none" />
-          <div className="absolute -bottom-10 -left-10 w-40 h-40 rounded-full border border-cyan-400/10 pointer-events-none" />
-
-          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8 p-8 md:p-12">
             <div className="max-w-xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 font-mono text-xs text-white/80 font-semibold uppercase mb-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/15 font-mono text-xs text-white/80 font-semibold uppercase mb-4">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
                 READY TO ENGAGE
               </div>
-              <h2 className="font-headline text-2xl sm:text-3xl font-bold leading-tight">
-                {ctaHeading}
-              </h2>
-              <p className="mt-3 text-white/70 text-sm leading-relaxed">
-                {ctaBody}
-              </p>
+              <h2 className="font-headline text-2xl sm:text-3xl font-bold leading-tight text-white">{ctaHeading}</h2>
+              <p className="mt-3 text-white/70 text-sm leading-relaxed">{ctaBody}</p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 shrink-0">
               <Link
                 href={ctaPrimaryHref!}
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-primary shadow-sm hover:bg-zinc-100 transition-all duration-200"
+                className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-primary shadow-lg hover:bg-zinc-50 hover:scale-105 transition-all duration-200"
               >
                 <span>{ctaPrimaryLabel}</span>
-                <span className="material-symbols-outlined text-[16px] group-hover:translate-x-0.5 transition-transform">
-                  arrow_forward
-                </span>
+                <span className="material-symbols-outlined text-[16px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
               </Link>
               {ctaSecondaryLabel && ctaSecondaryHref && (
                 <Link
                   href={ctaSecondaryHref}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10 transition-all duration-200"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10 transition-all duration-200"
                 >
                   {ctaSecondaryLabel}
                 </Link>
